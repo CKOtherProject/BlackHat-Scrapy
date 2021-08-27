@@ -65,7 +65,7 @@ def sort_PDF(Area_Date):
 #Download pdf file
 def download_PDF(PDF):
     currentDir = os.getcwd()
-    subprocess.call(['wget', '--no-check-certificate', '-t 1', '-T 10' ,'-P', currentDir + '/save/'+Area_Date, PDF], cwd=currentDir)
+    subprocess.call(['wget', '--no-check-certificate', '-t 1', '-T 10' ,'-P', currentDir + '/save', PDF], cwd=currentDir)
 
 tp = ThreadPool(30)
 All_pdf = []
