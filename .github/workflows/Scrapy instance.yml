@@ -34,8 +34,8 @@ jobs:
         pip install -r requirements.txt
         sudo apt update && sudo apt install wget
         
-    - name: Create save folder
-      run: mkdir ${{ github.workspace }}/save
+#     - name: Create save folder
+#       run: mkdir ${{ github.workspace }}/save
       
     - name: Run with script
       run: python scrapy.py
