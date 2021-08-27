@@ -44,12 +44,8 @@ def get_All_Sessions(Area_With_Date):
         
 
 #Sort all the pdf file link
-def sort_PDF():
-    TopicURL = []
-    for i in rang(18, 21)
-        area = "us-" + str(i)
-        URL = get_All_Sessions(Area_With_Date=area)
-        TopicURL.append(URL)
+def sort_PDF(Area_Date):
+    TopicURL = get_All_Sessions(Area_With_Date=Area_Date)
     All_PDF=[]
     for url in TopicURL:
         kill_child_processes(os.getpid())
@@ -57,7 +53,6 @@ def sort_PDF():
         soup = BeautifulSoup(response[0],'lxml')
         print(url)
         div = soup.find('div', class_="bhpresentation")
-       
         if not div:
             continue
         main_div = div.find_all('a')
@@ -70,8 +65,26 @@ def sort_PDF():
 #Download pdf file
 def download_PDF(PDF):
     currentDir = os.getcwd()
-    subprocess.call(['wget', '--no-check-certificate', '-t 1', '-T 10' ,'-P', currentDir + '/save', PDF], cwd=currentDir)
+    subprocess.call(['wget', '--no-check-certificate', '-t 1', '-T 10' ,'-P', currentDir + '/save/'+Area_Date, PDF], cwd=currentDir)
 
 tp = ThreadPool(30)
-All_pdf = sort_PDF()
+All_pdf = []
+for i in range(18, 21):
+    Area_Date = "us-" + str(i)
+    print(Area_Date)
+    pdf = sort_PDF(Area_Date)
+    All_pdf.append(pdf)
+
+for i in range(18, 21):
+    Area_Date = "eu-" + str(i)
+    print(Area_Date)
+    pdf = sort_PDF(Area_Date)
+    All_pdf.append(pdf)
+
+for i in range(18, 21):
+    Area_Date = "asia-" + str(i)
+    print(Area_Date)
+    pdf = sort_PDF(Area_Date)
+    All_pdf.append(pdf)
+
 _return = tp.map(download_PDF, (All_pdf))
