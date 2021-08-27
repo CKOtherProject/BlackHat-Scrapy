@@ -30,12 +30,25 @@ jobs:
       
     - name: Run with script
       run: python scrapy.py
-
-    - name: Tar files
-      run: tar -zcvf BlackHat-PDF.tar.gz -C ${{ github.workspace }} save/
-
-    - name: Deliver pdf file
-      uses: actions/upload-artifact@v2
+      
+    - name: '提交 Git'
+      run: |
+          git config --global user.email action@github.com
+          git config --global user.name GitHub Action
+          git add ${{ github.workspace }}/save
+          time=$(date "+%Y-%m-%d %H:%M:%S")
+          git commit -m "${time} 自动更新" -a
+        
+    - name: Push changes
+      uses: ad-m/github-push-action@master
       with:
-        name: BlackHat-PDF
-        path: BlackHat-PDF.tar.gz
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          
+#     - name: Tar files
+#       run: tar -zcvf BlackHat-PDF.tar.gz -C ${{ github.workspace }} save/
+
+#     - name: Deliver pdf file
+#       uses: actions/upload-artifact@v2
+#       with:
+#         name: BlackHat-PDF
+#         path: BlackHat-PDF.tar.gz
