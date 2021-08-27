@@ -1,12 +1,14 @@
-name: Run Scrapy
 
-name: BuildDockerfileImage
+
+name: RunScrapy
 
 on:
   # 防止 Fork 乱用 actions 设置只能手动触发构建
   workflow_dispatch:
   repository_dispatch:
     types: Run_Scrapy
+    
+#    name: Run Scrapy
 # on:
 #   push:
 #     branches: [ main ]
