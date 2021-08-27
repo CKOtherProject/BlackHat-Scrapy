@@ -68,23 +68,21 @@ def download_PDF(PDF):
     subprocess.call(['wget', '--no-check-certificate', '-t 1', '-T 10' ,'-P', currentDir + '/save', PDF], cwd=currentDir)
 
 tp = ThreadPool(30)
-All_pdf = []
+
 for i in range(18, 21):
     Area_Date = "us-" + str(i)
     print(Area_Date)
-    pdf = sort_PDF(Area_Date)
-    All_pdf.append(pdf)
+    All_pdf = sort_PDF(Area_Date)
+    _return = tp.map(download_PDF, (All_pdf))
 
 for i in range(18, 21):
     Area_Date = "eu-" + str(i)
     print(Area_Date)
-    pdf = sort_PDF(Area_Date)
-    All_pdf.append(pdf)
+    All_pdf = sort_PDF(Area_Date)
+    _return = tp.map(download_PDF, (All_pdf))
 
 for i in range(18, 21):
     Area_Date = "asia-" + str(i)
     print(Area_Date)
-    pdf = sort_PDF(Area_Date)
-    All_pdf.append(pdf)
-
-_return = tp.map(download_PDF, (All_pdf))
+    All_pdf = sort_PDF(Area_Date)
+    _return = tp.map(download_PDF, (All_pdf))
